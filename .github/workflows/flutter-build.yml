@@ -127,10 +127,9 @@ jobs:
       - name: Build flutter
         shell: bash
         run: |
-          $sourcePath = "C:\hostedtoolcache\windows\flutter\stable-${{ env.FLUTTER_VERSION }}-x64"
-          $zipPath = "C:\hostedtoolcache\windows\flutter\flutter-${{ env.FLUTTER_VERSION }}.zip"
-          Compress-Archive -Path $sourcePath -DestinationPath $zipPath
-          mv $zipPath ../../SignOutput/flutter-${{ env.FLUTTER_VERSION }}.zip
+          echo "Build flutter stage01"
+          Compress-Archive -Path C:\hostedtoolcache\windows\flutter\stable-${{ env.FLUTTER_VERSION }}-x64 -DestinationPath $zipPath ../../SignOutput/flutter-${{ env.FLUTTER_VERSION }}.zip
+          echo "Build flutter stage02"
           sha256sum ../../SignOutput/flutter-${{ env.FLUTTER_VERSION }}.zip
           echo "Build Flutter successful."
           
