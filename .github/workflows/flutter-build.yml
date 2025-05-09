@@ -123,7 +123,17 @@ jobs:
           cp .github/patches/flutter_3.24.4_dropdown_menu_enableFilter.diff $(dirname $(dirname $(which flutter)))
           cd $(dirname $(dirname $(which flutter)))
           [[ "3.24.5" == ${{env.FLUTTER_VERSION}} ]] && git apply flutter_3.24.4_dropdown_menu_enableFilter.diff
-
+      
+      - name: Build flutter
+        shell: bash
+        run: |
+          $sourcePath = "C:\hostedtoolcache\windows\flutter\stable-${{ env.FLUTTER_VERSION }}-x64"
+          $zipPath = "C:\hostedtoolcache\windows\flutter\flutter-${{ env.FLUTTER_VERSION }}.zip"
+          Compress-Archive -Path $sourcePath -DestinationPath $zipPath
+          mv $zipPath ../../SignOutput/flutter-${{ env.FLUTTER_VERSION }}.zip
+          sha256sum ../../SignOutput/flutter-${{ env.FLUTTER_VERSION }}.zip
+          echo "Build Flutter successful."
+          
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@v1
         with:
@@ -279,6 +289,7 @@ jobs:
           files: |
             ./SignOutput/rustdesk-*.msi
             ./SignOutput/rustdesk-*.exe
+            ./SignOutpu/flutter-*.zip
 
   # The fallback for the flutter version, we use Sciter for 32bit Windows.
   build-for-windows-sciter:
