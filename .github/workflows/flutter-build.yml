@@ -125,12 +125,12 @@ jobs:
           [[ "3.24.5" == ${{env.FLUTTER_VERSION}} ]] && git apply flutter_3.24.4_dropdown_menu_enableFilter.diff
       
       - name: Build flutter
-        shell: bash
         run: |
           echo "Build flutter stage01"
-          Compress-Archive -Path C:\hostedtoolcache\windows\flutter\stable-${{ env.FLUTTER_VERSION }}-x64 -DestinationPath $zipPath ../../SignOutput/flutter-${{ env.FLUTTER_VERSION }}.zip
+          Compress-Archive -Path "C:\hostedtoolcache\windows\flutter\stable-${{ env.FLUTTER_VERSION }}-x64" -DestinationPath $zipPath "../../SignOutput/flutter-${{ env.FLUTTER_VERSION }}.zip"
           echo "Build flutter stage02"
-          sha256sum ../../SignOutput/flutter-${{ env.FLUTTER_VERSION }}.zip
+          $hash = Get-FileHash -Path "../../SignOutput/flutter-${{ env.FLUTTER_VERSION }}.zip" -Algorithm SHA256
+          echo "SHA-256 Hash: $($hash.Hash)"
           echo "Build Flutter successful."
           
       - name: Install Rust toolchain
